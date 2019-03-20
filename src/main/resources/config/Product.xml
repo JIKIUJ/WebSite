@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper标签都有一个唯一标示，即为命名空间namespace -->
+<mapper namespace="com.website.mapper.ProductMapper">
+    <!--
+        数据库查询数据
+        insert、select、delete、update:sql语句类型
+        id:sql语句唯一标识
+        resultType:结果返回值类型-包名+类名 或 基本数据类型
+        parameterType:匹配字段值-包名+类名 或 基本数据类型
+    -->
+
+    <select id="getAll" parameterType="com.website.entity.Product"  resultType="com.website.entity.Product">
+        select * from Product where 1=1
+        <if test="name !=null and !&quot;&quot;.equals(name.trim())">and name like '%' #{name} '%'</if>
+        <if test="type !=null and !&quot;&quot;.equals(type.trim())">and type like '%' #{type} '%'</if>
+    </select>
+
+
+    <select id="getOneById" parameterType="com.website.entity.Product"  resultType="com.website.entity.Product">
+        select * from Product where ID=#{ID}
+    </select>
+
+    <insert id="insert"  parameterType="com.website.entity.Product">
+    insert into Product values(#{id},#{name},#{price},#{type})
+    </insert>
+
+    <delete id="delete" parameterType="Integer">
+            delete from Product where ID = #{id}
+    </delete>
+
+    <update id="update" parameterType="com.website.entity.Product">
+    update Product set id=#{id},name=#{name},price=#{price},type=#{type} where id =#{id};
+    </update>
+
+</mapper>
